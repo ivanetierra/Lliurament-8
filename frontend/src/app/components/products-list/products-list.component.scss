@@ -1,0 +1,8 @@
+.trash-icon {
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.trash-icon:hover {
+  color: red;
+  transform: rotate(20deg);
+}
