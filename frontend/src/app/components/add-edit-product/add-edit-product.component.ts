@@ -3,6 +3,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router } from '@angular/router';
 import { Product } from '../../interfaces/product.interface';
 import { CommonModule } from '@angular/common';
+import { ProductService } from '../../services/product.service';
 
 @Component({
   selector: 'app-add-edit-product',
@@ -12,7 +13,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './add-edit-product.component.scss',
 })
 export class AddEditProductComponent {
-  constructor(private router: Router) {}
+  constructor(private router: Router, private _productService : ProductService) {}
 
   goBack() {
     this.router.navigate(['/']);
@@ -27,5 +28,11 @@ export class AddEditProductComponent {
 
   addProduct() {
     const product: Product = this.form.value;
+    this._productService.saveProduct(product).subscribe(
+      () => {
+        this.router.navigate(['/']);
+      }
+    );
   }
+  
 }

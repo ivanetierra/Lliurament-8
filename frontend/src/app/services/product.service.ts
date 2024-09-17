@@ -12,8 +12,8 @@ export class ProductService {
   private myAppUrl: string;
 
   constructor(private http: HttpClient) {
-    this.myApiUrl = 'products/';
     this.myAppUrl = 'http://localhost:3000/';
+    this.myApiUrl = 'products/';
 
    }
  
@@ -23,5 +23,9 @@ export class ProductService {
 
    deleteProduct(id: number): Observable<any> {
     return this.http.delete(this.myAppUrl + this.myApiUrl + id);
+   }
+
+   saveProduct(product: Product): Observable<Product> { 
+    return this.http.post<Product>(this.myAppUrl + this.myApiUrl, product);
    }
 }
