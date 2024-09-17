@@ -33,6 +33,8 @@ export class AddEditProductComponent implements OnInit {
     this.id = Number(this.aRouter.snapshot.paramMap.get('id'));
   }
 
+  
+
   ngOnInit(): void {
     if (this.id > 0) {
       this.function = 'Edit';
@@ -47,21 +49,31 @@ export class AddEditProductComponent implements OnInit {
         })
     }
   }
-
-
-  
   
   goBack() {
   this.router.navigate(['/']);
   }
 
   addProduct() {
+
+    const product: Product = this.form.value;
+
+    if (this.id > 0) {
+      product.id = this.id;
+      this._productService.updateProduct(this.id, this.form.value).subscribe(
+        () => {
+          this.router.navigate(['/']);
+        }
+      );
+    } else {
     const product: Product = this.form.value;
     this._productService.saveProduct(product).subscribe(
       () => {
         this.router.navigate(['/']);
       }
     );
+  }
+  
   }
   
 }
