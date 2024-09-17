@@ -20,4 +20,8 @@ export class ProductService {
    getProducts(): Observable<Product[]> {
     return this.http.get<Product[]>(this.myAppUrl + this.myApiUrl);
    }
+
+   deleteProduct(id: number): Observable<any> {
+    return this.http.delete(this.myAppUrl + this.myApiUrl + id);
+   }
 }

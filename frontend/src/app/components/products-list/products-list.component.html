@@ -40,7 +40,7 @@
           </th>
           <td class="px-6 py-4">{{ product.description }}</td>
           <td class="px-6 py-4">{{ product.stock }}</td>
-          <td class="px-6 py-4">{{ product.price }}</td>
+          <td class="px-6 py-4">{{ product.price | currency }}</td>
           <td class="px-6 py-4 flex justify-between">
             <a
               href="#"
@@ -48,7 +48,9 @@
               routerLink="/edit/{{ product.id }}"
               >Edit</a
             >
-            <a href="#"><i class="fas fa-trash trash-icon"></i></a>
+            <a (click)="deleteProduct(product.id!)" href="#"
+              ><i class="fas fa-trash trash-icon"></i
+            ></a>
           </td>
         </tr>
         }
