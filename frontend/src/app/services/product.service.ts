@@ -28,4 +28,8 @@ export class ProductService {
    saveProduct(product: Product): Observable<Product> { 
     return this.http.post<Product>(this.myAppUrl + this.myApiUrl, product);
    }
+
+   getProductById(id: number): Observable<Product> {
+    return this.http.get<Product>(this.myAppUrl + this.myApiUrl + id);
+   }
 }
