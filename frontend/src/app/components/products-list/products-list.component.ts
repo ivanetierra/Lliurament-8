@@ -27,14 +27,12 @@ export class ProductsListComponent {
       
       (data) => {
         this.productsList = data;
-        console.log(data);
       });
   }
 
   deleteProduct(id: number) {
     this._productService.deleteProduct(id).subscribe(
-      (data) => {
-        console.log(data);
+      () => {
         this.getProducts();
       }
     );
