@@ -1,8 +1,8 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { CalendarOptions } from '@fullcalendar/core';
-import interactionPlugin from '@fullcalendar/interaction';
 import timeGridPlugin from '@fullcalendar/timegrid';
+import interactionPlugin from '@fullcalendar/interaction';
 
 @Component({
   selector: 'app-calendar',
@@ -12,12 +12,17 @@ import timeGridPlugin from '@fullcalendar/timegrid';
   styleUrls: ['./calendar.component.scss'],
 })
 export class CalendarComponent {
+  selectedEvent: any = null;
+  isModalOpen = false;
+  newEventTitle: string = '';
+
   calendarOptions: CalendarOptions = {
     initialView: 'timeGridWeek',
     plugins: [timeGridPlugin, interactionPlugin],
     editable: true,
     selectable: true,
     dateClick: this.handleDateClick.bind(this),
+    eventClick: this.handleEventClick.bind(this),
     events: [],
   };
 
@@ -32,5 +37,34 @@ export class CalendarComponent {
         { title, start: arg.dateStr },
       ];
     }
+  }
+
+  handleEventClick(info: any) {
+    this.selectedEvent = info.event;
+    this.newEventTitle = info.event.title;
+    this.isModalOpen = true;
+  }
+
+  updateEvent() {
+    if (this.newEventTitle.trim() !== '') {
+      this.selectedEvent.setProp('title', this.newEventTitle);
+      this.closeModal();
+    }
+  }
+
+  deleteEvent() {
+    this.selectedEvent.remove();
+    this.closeModal();
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
+    this.selectedEvent = null;
+    this.newEventTitle = '';
+  }
+
+  // Handle input changes
+  onTitleInput(event: any) {
+    this.newEventTitle = event.target.value;
   }
 }
