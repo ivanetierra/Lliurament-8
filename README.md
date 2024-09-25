@@ -45,7 +45,7 @@ git clone https://github.com/ivanetierra/Lliurament-8
 
 ### 2. Backend Setup:
 
-1. **Install dependencies**:
+1. **Install dependencies**:<br />
 -open new terminal
    ```bash
    cd server
