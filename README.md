@@ -81,5 +81,8 @@ open new terminal
 
 You can use the following database.sql script to create the necessary tables and insert sample data. The script is located in:<br />
 
-
+ ```bash
 server/database.sql
+```
+
+The database connection is handled in the server/src/connection.db.ts (username: root, password:root) adjust as needed
