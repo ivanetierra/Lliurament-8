@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, effect } from '@angular/core';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { CalendarOptions } from '@fullcalendar/core';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
+import { CalendarService } from '../../services/calendar.service';
 
 @Component({
   selector: 'app-calendar',
@@ -11,31 +12,43 @@ import interactionPlugin from '@fullcalendar/interaction';
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss'],
 })
-export class CalendarComponent {
-  selectedEvent: any = null;
+export class CalendarComponent implements OnInit {
+  calendarOptions: CalendarOptions | undefined;
   isModalOpen = false;
-  newEventTitle: string = '';
+  newEventTitle = '';
+  selectedEvent: any = null;
 
-  calendarOptions: CalendarOptions = {
-    initialView: 'timeGridWeek',
-    plugins: [timeGridPlugin, interactionPlugin],
-    editable: true,
-    selectable: true,
-    dateClick: this.handleDateClick.bind(this),
-    eventClick: this.handleEventClick.bind(this),
-    events: [],
-  };
+  constructor(private calendarService: CalendarService) {
+    // Move the effect() call to the constructor, where it has proper injection context
+    effect(() => {
+      const events = this.calendarService.events(); // Get the updated events from the signal
+      console.log('Events bound to FullCalendar:', events); // Debugging log
+      if (this.calendarOptions) {
+        this.calendarOptions.events = events; // Set the events in FullCalendar options
+      }
+    });
+  }
+
+  ngOnInit(): void {
+    // Initialize the calendar options without the effect()
+    this.calendarOptions = {
+      initialView: 'timeGridWeek',
+      plugins: [timeGridPlugin, interactionPlugin],
+      editable: true,
+      selectable: true,
+      dateClick: this.handleDateClick.bind(this),
+      eventClick: this.handleEventClick.bind(this),
+    };
+
+    // Fetch the initial events from the backend
+    this.calendarService.getEvents();
+  }
 
   handleDateClick(arg: any) {
     const title = prompt('Enter event title:');
     if (title) {
-      const currentEvents = Array.isArray(this.calendarOptions.events)
-        ? this.calendarOptions.events
-        : [];
-      this.calendarOptions.events = [
-        ...currentEvents,
-        { title, start: arg.dateStr },
-      ];
+      const newEvent = { title, start: arg.dateStr, end: arg.dateStr };
+      this.calendarService.createEvent(newEvent);
     }
   }
 
@@ -48,13 +61,17 @@ export class CalendarComponent {
   updateEvent() {
     if (this.newEventTitle.trim() !== '') {
       this.selectedEvent.setProp('title', this.newEventTitle);
-      this.closeModal();
+      this.isModalOpen = false;
+      this.selectedEvent = null;
+      this.newEventTitle = '';
     }
   }
 
   deleteEvent() {
     this.selectedEvent.remove();
-    this.closeModal();
+    this.isModalOpen = false;
+    this.selectedEvent = null;
+    this.newEventTitle = '';
   }
 
   closeModal() {
@@ -63,7 +80,6 @@ export class CalendarComponent {
     this.newEventTitle = '';
   }
 
-  // Handle input changes
   onTitleInput(event: any) {
     this.newEventTitle = event.target.value;
   }

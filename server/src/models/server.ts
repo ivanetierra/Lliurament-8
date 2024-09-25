@@ -2,6 +2,7 @@ import express, {Application, Request, Response} from 'express';
 import productRoutes from '../routes/product.routes';
 import db from '../db/connection.db';
 import cors from 'cors';
+import calendarEventRoutes from '../routes/calendarEvent.routes';
 
 
 class Server {
@@ -30,6 +31,7 @@ class Server {
             });
         });
         this.app.use('/products', productRoutes);
+        this.app.use('/calendar', calendarEventRoutes);
     }
 
     midlewares() {
