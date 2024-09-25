@@ -40,12 +40,13 @@ Follow these steps to set up the project:
 
 ### 1. Clone the Repository:
 ```bash
-git clone <repository-url>
+git clone https://github.com/ivanetierra/Lliurament-8
 ```
 
 ### 2. Backend Setup:
 
 1. **Install dependencies**:
+open new terminal
    ```bash
    cd server
    npm install
@@ -54,4 +55,10 @@ git clone <repository-url>
 2. **Start the TypeScript compiler in watch mode:**:
    ```bash
    tsc -w
+   ```
+
+3. **Start the TypeScript compiler in watch mode:**:
+   open new terminal
+   ```bash
+   nodemon dist/index.js
    ```
