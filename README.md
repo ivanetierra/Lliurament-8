@@ -46,19 +46,19 @@ git clone https://github.com/ivanetierra/Lliurament-8
 ### 2. Backend Setup:
 
 1. **Install dependencies**:
-open new terminal
+-open new terminal
    ```bash
    cd server
    npm install
    ```
 
-2. **Start the TypeScript compiler in watch mode:**:
+2. **Start the TypeScript compiler in watch mode:**
    ```bash
    tsc -w
    ```
 
-3. **Start the TypeScript compiler in watch mode:**:
-   open new terminal
+3. **Start the backend with Nodemon**
+   -open new terminal
    ```bash
    nodemon dist/index.js
    ```
