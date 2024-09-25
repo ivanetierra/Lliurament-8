@@ -46,7 +46,7 @@ git clone https://github.com/ivanetierra/Lliurament-8
 ### 2. Backend Setup:
 
 1. **Install dependencies**:<br />
--open new terminal
+open new terminal
    ```bash
    cd server
    npm install
@@ -57,8 +57,29 @@ git clone https://github.com/ivanetierra/Lliurament-8
    tsc -w
    ```
 
-3. **Start the backend with Nodemon**
-   -open new terminal
+3. **Start the backend with Nodemon**<br />
+   open new terminal
    ```bash
    nodemon dist/index.js
    ```
+   
+### 2. Frontend Setup:
+
+1. **Install dependencies**:<br />
+open new terminal
+   ```bash
+   cd frontend
+   npm install
+   ```
+
+2. **Run the Angular application:**
+   ```bash
+   ng serve -o
+   ```
+
+### 3.Database Configuration:
+
+You can use the following database.sql script to create the necessary tables and insert sample data. The script is located in:<br />
+
+
+server/database.sql
